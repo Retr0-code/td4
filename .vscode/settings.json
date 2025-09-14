@@ -62,6 +62,12 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "queue": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "bitset": "cpp",
+        "cstring": "cpp",
+        "regex": "cpp",
+        "stack": "cpp",
+        "print": "cpp",
+        "iostream": "cpp"
     }
 }
