@@ -1,3 +1,4 @@
+#pragma once
 #include "AbstractSyntaxTreeNode.hpp"
 
 namespace td4 {
@@ -6,11 +7,13 @@ namespace td4 {
         
     };
     
-    class OprationUnary : public IOperator {
+    class OperatorUnary : public IOperator {
 
+    protected:
+        
     };
     
-    class OprationBinary : public IOperator {
+    class OperatorBinary : public IOperator {
 
     };
 

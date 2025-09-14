@@ -1,3 +1,4 @@
+#pragma once
 #include "AbstractSyntaxTreeNode.hpp"
 
 namespace td4 {
