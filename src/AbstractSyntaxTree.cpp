@@ -33,13 +33,10 @@ namespace td4 {
         return *this;
     }
     
-    AbstractSyntaxTreeNode AbstractSyntaxTree::ParseLine(const std::string &line) const {
-        AbstractSyntaxTreeNode astNode;
+    AbstractSyntaxTree::TreeNodePtr AbstractSyntaxTree::ParseLine(const std::string &line) const {
         for (std::string token : this->Tokenize(line)) {
             std::cout << token << '\n';
         }
-
-        return astNode;
     }
 
     std::vector<std::string> AbstractSyntaxTree::Tokenize(const std::string &line) const {

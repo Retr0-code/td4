@@ -9,9 +9,9 @@ set(SOURCES
     src/AbstractSyntaxTreeNode.cpp
     src/IOperand.cpp
     src/IOperator.cpp
-    src/Operands.cpp
-    src/Operators.cpp
 )
+
+add_subdirectory(src)
 
 add_library(${PROJECT_NAME}-ast ${SOURCES})
 target_include_directories(${PROJECT_NAME}-ast PUBLIC include)

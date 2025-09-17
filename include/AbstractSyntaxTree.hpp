@@ -15,7 +15,7 @@ namespace td4 {
 
         AbstractSyntaxTree& Parse(std::istream& program);
         
-        AbstractSyntaxTreeNode ParseLine(const std::string& line) const;
+        TreeNodePtr ParseLine(const std::string& line) const;
 
         TreeRaw& GetTree(void);
 

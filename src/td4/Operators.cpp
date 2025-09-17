@@ -1,6 +1,7 @@
 #include "Operators.hpp"
 
 namespace td4 {
+    
     OperatorMov::OperatorMov(const OperandPtr &operandLeft, const OperandPtr &operandRight)
         : IOperatorBinary("mov", operandLeft, operandRight) {  }
 
