@@ -8,7 +8,7 @@ set(COMPILER_MODULES
     # x86_64
 )
 
-foreach(compiler {COMPILER_MODULES})
-    add_subdirectory(compiler)
+foreach(compiler ${COMPILER_MODULES})
+    add_subdirectory(${compiler})
 endforeach()
 
