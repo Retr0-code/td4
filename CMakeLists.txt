@@ -6,6 +6,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(SOURCES
     src/Exceptions.cpp
     src/AbstractSyntaxTree.cpp
+    src/AbstractSyntaxTreeNode.cpp
+    src/IOperand.cpp
+    src/IOperator.cpp
+    src/Operands.cpp
+    src/Operators.cpp
 )
 
 add_library(${PROJECT_NAME}-ast ${SOURCES})

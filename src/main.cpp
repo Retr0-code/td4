@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
     std::string cpu_architecture{"td4"};
 
-    td4::Compiler compiler(cpu_architecture);
+    // td4::Compiler compiler(cpu_architecture);
     
     td4::AbstractSyntaxTree ast(program);
     

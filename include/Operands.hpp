@@ -1,26 +1,21 @@
 #pragma once
-#include "AbstractSyntaxTreeNode.hpp"
+#include "IOperand.hpp"
 
 namespace td4 {
 
-    class IOperand : AbstractSyntaxTreeNode {
-
-    };
-
     class Immediate : public IOperand {
-
+    public:
+        Immediate(uint8_t value);
     };
 
-    class Register : public IOperand {
-
+    class RegisterA : public IOperand {
+    public:
+        RegisterA(void);
     };
 
-    class RegisterA : public Register {
-
-    };
-
-    class RegisterB : public Register {
-
+    class RegisterB : public IOperand {
+    public:
+        RegisterB(void);
     };
 
 }

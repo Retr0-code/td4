@@ -17,11 +17,12 @@ namespace td4 {
 
     class AbstractSyntaxTreeNode {
     public:
-        AbstractSyntaxTreeNode(void) = default;
+        AbstractSyntaxTreeNode(const Mnemonic& mnemonic);
 
-        AbstractSyntaxTreeNode(const std::string& token) {}
-
-        virtual const Mnemonic& GetMnemonic(void) {};
+        virtual const Mnemonic& GetMnemonic(void) const;
+    
+    protected:
+        Mnemonic _mnemonic;
     };
 
 }

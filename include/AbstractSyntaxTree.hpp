@@ -8,24 +8,25 @@ namespace td4 {
     
     class AbstractSyntaxTree {
     public:
-        using TreeRaw = std::vector<std::shared_ptr<AbstractSyntaxTreeNode>>;
+        using TreeNodePtr = std::shared_ptr<AbstractSyntaxTreeNode>;
+        using TreeRaw = std::vector<TreeNodePtr>;
 
         AbstractSyntaxTree(std::istream& program);
 
         AbstractSyntaxTree& Parse(std::istream& program);
         
-        AbstractSyntaxTreeNode ParseLine(const std::string& line);
+        AbstractSyntaxTreeNode ParseLine(const std::string& line) const;
 
-        // TreeRaw& GetTree(void);
+        TreeRaw& GetTree(void);
 
     private:
-        std::vector<std::string> Tokenize(const std::string& line);
+        std::vector<std::string> Tokenize(const std::string& line) const;
 
-        // Mnemonic GetMnemonic(const AbstractSyntaxTreeNode& node);
+        // Mnemonic GetMnemonic(const AbstractSyntaxTreeNode& node) const;
 
     private:
         TreeRaw _tree;
-        // std::unordered_map<std::string, >
+        static std::unordered_map<std::string, TreeNodePtr> _registry;
     };
 
 }
