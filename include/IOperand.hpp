@@ -4,7 +4,7 @@
 
 namespace td4 {
 
-    class IOperand : AbstractSyntaxTreeNode {
+    class IOperand : public AbstractSyntaxTreeNode {
     public:
         IOperand(const Mnemonic& mnemonic);
 

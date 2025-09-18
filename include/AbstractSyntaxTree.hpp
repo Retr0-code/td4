@@ -3,30 +3,33 @@
 #include <unordered_map>
 
 #include "AbstractSyntaxTreeNode.hpp"
+#include "ASTNodeFactory.hpp"
 
 namespace td4 {
     
     class AbstractSyntaxTree {
     public:
-        using TreeNodePtr = std::shared_ptr<AbstractSyntaxTreeNode>;
-        using TreeRaw = std::vector<TreeNodePtr>;
+        using TreeRaw = std::vector<ASTNodePtr>;
 
-        AbstractSyntaxTree(std::istream& program);
+        AbstractSyntaxTree(const ASTNodeFactoryPtr& astFactory, std::istream& program);
 
         AbstractSyntaxTree& Parse(std::istream& program);
         
-        TreeNodePtr ParseLine(const std::string& line) const;
+        ASTNodePtr ParseLine(const std::string& line) const;
 
         TreeRaw& GetTree(void);
 
     private:
         std::vector<std::string> Tokenize(const std::string& line) const;
 
+        static std::string TokenToLower(std::string token);
+
         // Mnemonic GetMnemonic(const AbstractSyntaxTreeNode& node) const;
 
     private:
+        ASTNodeFactoryPtr _nodeFactory;
         TreeRaw _tree;
-        static std::unordered_map<std::string, TreeNodePtr> _registry;
+        static std::unordered_map<std::string, ASTNodePtr> _registry;
     };
 
 }

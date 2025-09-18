@@ -1,7 +1,7 @@
 #pragma once
-#include <list>
 #include <string>
 #include <vector>
+#include <memory>
 #include <cstdint>
 
 namespace td4 {
@@ -19,10 +19,12 @@ namespace td4 {
     public:
         AbstractSyntaxTreeNode(const Mnemonic& mnemonic);
 
-        virtual const Mnemonic& GetMnemonic(void) const;
+        virtual Mnemonic GetMnemonic(void) const;
     
     protected:
         Mnemonic _mnemonic;
     };
+
+    using ASTNodePtr = std::shared_ptr<AbstractSyntaxTreeNode>;
 
 }

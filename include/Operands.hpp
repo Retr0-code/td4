@@ -5,6 +5,8 @@ namespace td4 {
 
     class Immediate : public IOperand {
     public:
+        Immediate(void);
+        
         Immediate(uint8_t value);
     };
 

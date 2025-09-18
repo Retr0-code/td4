@@ -9,34 +9,43 @@
 #include "Operators.hpp"
 #include "Operands.hpp"
 
+#define MAX_INSTRUCTIONS_MEMORY 16
+
 namespace td4 {
 
-    AbstractSyntaxTree::AbstractSyntaxTree(std::istream& program) {
-        this->_registry.emplace("mov", std::make_shared<OperatorMov>());
-        this->_registry.emplace("add", std::make_shared<OperatorAdd>());
-        this->_registry.emplace("jmp", std::make_shared<OperatorJmp>());
-        this->_registry.emplace("jnc", std::make_shared<OperatorJnc>());
-        this->_registry.emplace("out", std::make_shared<OperatorOut>());
-        this->_registry.emplace("in", std::make_shared<OperatorIn>());
-        this->_registry.emplace("a", std::make_shared<RegisterA>());
-        this->_registry.emplace("b", std::make_shared<RegisterB>());
-        this->_registry.emplace("im", std::make_shared<Immediate>());
-
+    AbstractSyntaxTree::AbstractSyntaxTree(const ASTNodeFactoryPtr& nodeFactory, std::istream& program)
+        : _tree(MAX_INSTRUCTIONS_MEMORY), _nodeFactory(nodeFactory) {
         this->Parse(program);
     }
 
     AbstractSyntaxTree& AbstractSyntaxTree::Parse(std::istream& program) {
-        for (std::string line; std::getline(program, line);) {
-            this->ParseLine(line);
-        }
+        for (std::string line; std::getline(program, line);)
+            this->_tree.emplace_back(std::move(this->ParseLine(line)));
 
         return *this;
     }
     
-    AbstractSyntaxTree::TreeNodePtr AbstractSyntaxTree::ParseLine(const std::string &line) const {
-        for (std::string token : this->Tokenize(line)) {
-            std::cout << token << '\n';
+    ASTNodePtr AbstractSyntaxTree::ParseLine(const std::string &line) const {
+        std::vector<std::string> tokens{this->Tokenize(line)};
+        OperatorPtr operatorNode{nullptr};
+
+        auto currentToken = tokens.begin();
+        try {
+            operatorNode = std::shared_ptr<IOperator>(
+                reinterpret_cast<IOperator*>((*this->_nodeFactory)(*currentToken)));
+
+            std::transform(++currentToken, tokens.end(), operatorNode->begin(),
+                [this](const std::string& token) {
+                    return std::shared_ptr<IOperand>(
+                        reinterpret_cast<IOperand*>((*this->_nodeFactory)(token)));
+                }
+            );
+        } catch (InvalidToken &err) {
+            std::cerr << err.what() << '\n';
+            throw InvalidSyntax(line.c_str());
         }
+
+        return operatorNode;
     }
 
     std::vector<std::string> AbstractSyntaxTree::Tokenize(const std::string &line) const {
@@ -51,9 +60,16 @@ namespace td4 {
 
         for (auto token = regexTokens.begin() + 1; token != regexTokens.end(); ++token)
             if (token->length() > 0)
-                tokens.emplace_back(std::move(*token));
+                tokens.emplace_back(std::move(AbstractSyntaxTree::TokenToLower(*token)));
 
         return tokens;
+    }
+
+    std::string AbstractSyntaxTree::TokenToLower(std::string token) {
+        std::transform(token.begin(), token.end(), token.begin(),
+            [](uint8_t c){ return std::tolower(c); }
+        );
+        return token;
     }
 
     AbstractSyntaxTree::TreeRaw &AbstractSyntaxTree::GetTree(void) {

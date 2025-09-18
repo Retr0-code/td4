@@ -4,29 +4,42 @@
 
 namespace td4 {
 
-    class IOperatorUnary : public AbstractSyntaxTreeNode {
+    class IOperator : public AbstractSyntaxTreeNode {
     public:
-        IOperatorUnary(const Mnemonic& mnemonic, const OperandPtr& operand);
+        IOperator(const Mnemonic& mnemonic, size_t operandsAmount);
 
-        const Mnemonic &GetMnemonic(void) const override;
+        using Iterator = std::vector<OperandPtr>::iterator;
+
+        Iterator begin(void);
+
+        Iterator end(void);
 
     protected:
-        OperandPtr _operand;
+        std::vector<OperandPtr> _operands;
+    };
+
+    using OperatorPtr = std::shared_ptr<IOperator>;
+
+    class IOperatorUnary : public IOperator {
+    public:
+        IOperatorUnary(const Mnemonic& mnemonic);
+
+        IOperatorUnary(const Mnemonic& mnemonic, const OperandPtr& operand);
+
+        Mnemonic GetMnemonic(void) const override;
     };
     
-    class IOperatorBinary : public AbstractSyntaxTreeNode {
+    class IOperatorBinary : public IOperator {
     public:
+        IOperatorBinary(const Mnemonic& mnemonic);
+
         IOperatorBinary(
             const Mnemonic& mnemonic,
             const OperandPtr& operandLeft,
             const OperandPtr& operandRight
         );
 
-        const Mnemonic &GetMnemonic(void) const override;
-
-    protected:
-        OperandPtr _operandLeft;
-        OperandPtr _operandRight;
+        Mnemonic GetMnemonic(void) const override;
     };
 
 }
