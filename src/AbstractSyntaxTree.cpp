@@ -9,12 +9,10 @@
 #include "Operators.hpp"
 #include "Operands.hpp"
 
-#define MAX_INSTRUCTIONS_MEMORY 16
-
 namespace td4 {
 
     AbstractSyntaxTree::AbstractSyntaxTree(const ASTNodeFactoryPtr& nodeFactory, std::istream& program)
-        : _tree(MAX_INSTRUCTIONS_MEMORY), _nodeFactory(nodeFactory) {
+        : _nodeFactory(nodeFactory) {
         this->Parse(program);
     }
 
@@ -40,9 +38,9 @@ namespace td4 {
                         reinterpret_cast<IOperand*>((*this->_nodeFactory)(token)));
                 }
             );
-        } catch (InvalidToken &err) {
+        } catch (exception::InvalidToken &err) {
             std::cerr << err.what() << '\n';
-            throw InvalidSyntax(line.c_str());
+            throw exception::InvalidSyntax(line.c_str());
         }
 
         return operatorNode;
@@ -72,7 +70,7 @@ namespace td4 {
         std::regex_match(line, regexTokens, pattern);
 
         if (regexTokens.empty())
-            throw InvalidSyntax{line.c_str()};
+            throw exception::InvalidSyntax{line.c_str()};
 
         for (auto token = regexTokens.begin() + 1; token != regexTokens.end(); ++token)
             if (token->length() > 0)

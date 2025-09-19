@@ -3,21 +3,32 @@
 
 #include "Exceptions.hpp"
 
-const char *td4::Exception::what(void) const throw() {
+using namespace td4::exception;
+
+Exception::Exception(void) {
+    std::memset(this->_message, 0, EXCEPTION_MAX_LEN);
+};
+
+const char *Exception::what(void) const throw() {
     return this->_message;
 }
 
-td4::InvalidSyntax::InvalidSyntax(const char *message) {
-    std::memset(this->_message, 0, EXCEPTION_MAX_LEN);
+InvalidSyntax::InvalidSyntax(const char *message) {
     std::sprintf(this->_message, "Unable to parse line: %s\n", message);
 }
 
-td4::InvalidToken::InvalidToken(const char *message) {
-    std::memset(this->_message, 0, EXCEPTION_MAX_LEN);
+InvalidToken::InvalidToken(const char *message) {
     std::sprintf(this->_message, "Unable to recognize a token: %s\n", message);
 }
 
-td4::UnknownInstruction::UnknownInstruction(const char* message) {
-    std::memset(this->_message, 0, EXCEPTION_MAX_LEN);
+UnknownInstruction::UnknownInstruction(const char* message) {
     std::sprintf(this->_message, "Unknown combination of operands with operator: %s\n", message);
+}
+
+ModuleLoad::ModuleLoad(const char* message) {
+    std::sprintf(this->_message, "Unable to locate or load module \"%s\"\n", message);
+}
+
+ModuleCall::ModuleCall(const char* function, const char *module) {
+    std::sprintf(this->_message, "Unable to call function \"%s\" from module %s\n", function, module);
 }

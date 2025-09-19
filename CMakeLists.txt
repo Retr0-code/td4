@@ -12,11 +12,15 @@ set(SOURCES
     src/ASTNodeFactory.cpp
     src/Operands.cpp
     src/Operators.cpp
+    src/ArchitectureSelector.cpp
+    src/Compiler.cpp
 )
 
-# add_subdirectory(src)
+set(CMODS "")
 
-add_library(${PROJECT_NAME}-ast ${SOURCES})
+add_subdirectory(src)
+
+add_library(${PROJECT_NAME}-ast SHARED ${SOURCES})
 target_include_directories(${PROJECT_NAME}-ast PUBLIC include)
 
 add_executable(${PROJECT_NAME} src/main.cpp)

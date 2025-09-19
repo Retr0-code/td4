@@ -27,7 +27,7 @@ namespace td4 {
         } catch (std::out_of_range &err) {
             std::optional<uint8_t> immediate{TryParseImmediate(token)};
             if (!immediate)
-                throw InvalidToken(token.c_str());
+                throw exception::InvalidToken(token.c_str());
 
             astNode = this->_registry.at("im")();
             reinterpret_cast<IOperand*>(astNode)->SetValue(*immediate);
@@ -61,7 +61,7 @@ namespace td4 {
         try {
             immediate = std::stoi(token, nullptr, base);
         } catch (std::exception &err) {
-            throw InvalidToken(token.c_str());
+            throw exception::InvalidToken(token.c_str());
         }
 
         return immediate;

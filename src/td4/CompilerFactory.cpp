@@ -31,21 +31,21 @@ static uint8_t GetOperandValue(const td4::ASTNodePtr& node, size_t order = 0) {
 
 static inline td4::Compiler::Bytes ConstructBinaryOperation(uint8_t opcode, const td4::ASTNodePtr& node) {
     uint8_t instruction{opcode};
-    instruction &= 0x0f & GetOperandValue(node, 1);
+    instruction |= 0x0f & GetOperandValue(node, 1);
     return { instruction };
 }
 
 static inline td4::Compiler::Bytes ConstructUnaryOperation(uint8_t opcode, const td4::ASTNodePtr& node) {
     uint8_t instruction{opcode};
-    instruction &= 0x0f & GetOperandValue(node);
+    instruction |= 0x0f & GetOperandValue(node);
     return { instruction };
 }
 
-td4::Compiler GetCompiler() {
+extern "C" td4::Compiler GetCompiler(void) {
     using namespace td4;
 
     Compiler compiler;
-    
+
     compiler.Register(MOVAIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
         return ConstructBinaryOperation(TD4_MOVAIM, node);
     })

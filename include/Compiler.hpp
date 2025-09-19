@@ -11,6 +11,10 @@ namespace td4 {
         using Bytes = std::vector<uint8_t>;
         using OpcodeGenerator = std::function<Bytes (const ASTNodePtr&)>;
 
+        Compiler(void) = default;
+
+        Compiler(const Compiler& copy);
+
         virtual ~Compiler() = default;
     
         virtual Compiler& Register(const ASTNodePtr& astNode, const OpcodeGenerator& generator);

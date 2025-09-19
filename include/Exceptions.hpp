@@ -4,30 +4,44 @@
 #define EXCEPTION_MAX_LEN 128
 
 namespace td4 {
+    namespace exception {
 
-    class Exception : public std::exception {
-    public:
-        virtual ~Exception() = default;
+        class Exception : public std::exception {
+        public:
+            Exception(void);
 
-        const char *what(void) const throw () override;
+            virtual ~Exception() = default;
 
-    protected:
-        char _message[EXCEPTION_MAX_LEN];
-    };
+            const char *what(void) const throw () override;
 
-    class InvalidSyntax : public Exception {
-    public:
-        InvalidSyntax(const char* message);
-    };
+        protected:
+            char _message[EXCEPTION_MAX_LEN];
+        };
 
-    class InvalidToken : public Exception {
-    public:
-        InvalidToken(const char* message);
-    };
+        class InvalidSyntax : public Exception {
+        public:
+            InvalidSyntax(const char* message);
+        };
 
-    class UnknownInstruction : public Exception {
-    public:
-        UnknownInstruction(const char* message);
-    };
+        class InvalidToken : public Exception {
+        public:
+            InvalidToken(const char* message);
+        };
 
+        class UnknownInstruction : public Exception {
+        public:
+            UnknownInstruction(const char* message);
+        };
+
+        class ModuleLoad : public Exception {
+        public:
+            ModuleLoad(const char* message);
+        };
+
+        class ModuleCall : public Exception {
+        public:
+            ModuleCall(const char* function, const char *module);
+        };
+
+    }
 }

@@ -9,6 +9,6 @@ set(COMPILER_MODULES
 )
 
 foreach(compiler ${COMPILER_MODULES})
-    add_subdirectory(${compiler})
+    add_subdirectory(${compiler} ${CMAKE_BINARY_DIR}/modules)
 endforeach()
 

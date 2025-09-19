@@ -1,9 +1,11 @@
 #include <string>
 #include <sstream>
+#include <fstream>
 #include <iostream>
 
-#include "Compiler.hpp"
 #include "AbstractSyntaxTree.hpp"
+#include "ArchitectureSelector.hpp"
+#include "Compiler.hpp"
 #include "IOperand.hpp"
 #include "IOperator.hpp"
 
@@ -25,9 +27,6 @@ int main(int argc, char *argv[])
     };
 
     td4::ASTNodeFactoryPtr nodeFactory{new td4::ASTNodeFactory()};
-    std::string cpu_architecture{"td4"};
-
-    // td4::Compiler compiler(cpu_architecture);
     
     td4::AbstractSyntaxTree ast(nodeFactory, program);
 
@@ -38,6 +37,21 @@ int main(int argc, char *argv[])
         }
         std::cout << '\n';
     }
+
+    std::string cpu_architecture{"td4"};
+    td4::ArchitectureSelector compilerSelector(cpu_architecture);
+
+    td4::Compiler::Bytes payload{compilerSelector(ast)};
     
+    std::ofstream outFile("out.td4", std::ios::binary);
+    if (!outFile.is_open()) {
+        std::cerr << "Failed to open file\n";
+        return -1;
+    }
+
+    for (auto byte : payload)
+        outFile << byte;
+    
+    outFile.close();
     return 0;
 }
