@@ -13,7 +13,9 @@ namespace td4 {
         using Iterator = TreeRaw::iterator;
         using ConstIterator = TreeRaw::const_iterator;
 
-        AbstractSyntaxTree(const ASTNodeFactoryPtr& astFactory, std::istream& program);
+        AbstractSyntaxTree(const ASTNodeFactoryPtr& nodeFactory);
+
+        AbstractSyntaxTree(const ASTNodeFactoryPtr& nodeFactory, std::istream& program);
 
         AbstractSyntaxTree& Parse(std::istream& program);
         

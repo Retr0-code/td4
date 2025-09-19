@@ -1,5 +1,3 @@
-#include <iostream>
-#include <iomanip>
 #include "Compiler.hpp"
 #include "Exceptions.hpp"
 #include "AbstractSyntaxTree.hpp"
@@ -18,10 +16,8 @@ namespace td4 {
         std::vector<uint8_t> payload;
         for (const auto& node : ast) {
             try {
-                for (uint8_t byte : this->_generator.at(node->GetMnemonic())(node)) {
-                    std::cout << std::hex << (int)byte << std::endl;
+                for (uint8_t byte : this->_generator.at(node->GetMnemonic())(node))
                     payload.emplace_back(byte);
-                }
             } catch (std::out_of_range &err) {
                 throw exception::UnknownInstruction(node->GetMnemonic().c_str());
             }

@@ -11,14 +11,18 @@
 
 namespace td4 {
 
+    AbstractSyntaxTree::AbstractSyntaxTree(const ASTNodeFactoryPtr &nodeFactory)
+        : _nodeFactory(nodeFactory) {  }
+
     AbstractSyntaxTree::AbstractSyntaxTree(const ASTNodeFactoryPtr& nodeFactory, std::istream& program)
         : _nodeFactory(nodeFactory) {
         this->Parse(program);
     }
 
     AbstractSyntaxTree& AbstractSyntaxTree::Parse(std::istream& program) {
-        for (std::string line; std::getline(program, line);)
+        for (std::string line; std::getline(program, line);) {
             this->_tree.emplace_back(std::move(this->ParseLine(line)));
+        }
 
         return *this;
     }
