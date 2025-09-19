@@ -12,6 +12,8 @@ namespace td4 {
     public:
         ASTNodeFactory(void);
 
+        virtual ~ASTNodeFactory() = default;
+
         virtual AbstractSyntaxTreeNode* operator()(const std::string &token) const;
 
     private:
@@ -27,8 +29,7 @@ namespace td4 {
         std::optional<uint8_t> TryParseImmediate(const std::string &token) const;
 
     private:
-
-        std::unordered_map<std::string, ConstructorFunc> _generator;
+        std::unordered_map<std::string, ConstructorFunc> _registry;
     };
 
     using ASTNodeFactoryPtr = std::shared_ptr<ASTNodeFactory>;

@@ -8,6 +8,8 @@ namespace td4 {
     public:
         IOperator(const Mnemonic& mnemonic, size_t operandsAmount);
 
+        virtual ~IOperator() = default;
+
         using Iterator = std::vector<OperandPtr>::iterator;
 
         Iterator begin(void);

@@ -4,9 +4,7 @@ project(cmod VERSION 0.1)
 set(CMAKE_CXX_STANDARD 20)
 
 set(SOURCES
-    # Operands.cpp
-    # Operators.cpp
-    # ASTNodeFactory.cpp
+    CompilerFactory.cpp
 )
 
 add_library(${PROJECT_NAME}_td4 SHARED ${SOURCES})

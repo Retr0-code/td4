@@ -48,6 +48,22 @@ namespace td4 {
         return operatorNode;
     }
 
+    AbstractSyntaxTree::Iterator AbstractSyntaxTree::begin(void) {
+        return this->_tree.begin();
+    }
+
+    AbstractSyntaxTree::Iterator AbstractSyntaxTree::end(void) {
+        return this->_tree.end();
+    }
+
+    AbstractSyntaxTree::ConstIterator AbstractSyntaxTree::begin(void) const {
+        return this->_tree.begin();
+    }
+        
+    AbstractSyntaxTree::ConstIterator AbstractSyntaxTree::end(void) const {
+        return this->_tree.end();
+    }
+
     std::vector<std::string> AbstractSyntaxTree::Tokenize(const std::string &line) const {
         std::vector<std::string> tokens;
         std::regex pattern(R"(\s*([a-zA-Z]+)\s*([a-fA-F0-9]+[hbo]*)(?:\s*,\s*([a-fA-F0-9]+[hbo]*))?)");

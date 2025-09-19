@@ -8,16 +8,11 @@ namespace td4 {
 
     using Mnemonic = std::string;
 
-    class IOpcodeGenerator {
-    public:
-        using Bytes = std::vector<uint8_t>;
-
-        virtual Bytes operator()(void) = 0;
-    };
-
     class AbstractSyntaxTreeNode {
     public:
         AbstractSyntaxTreeNode(const Mnemonic& mnemonic);
+
+        virtual ~AbstractSyntaxTreeNode() = default;
 
         virtual Mnemonic GetMnemonic(void) const;
     

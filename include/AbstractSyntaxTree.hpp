@@ -10,6 +10,8 @@ namespace td4 {
     class AbstractSyntaxTree {
     public:
         using TreeRaw = std::vector<ASTNodePtr>;
+        using Iterator = TreeRaw::iterator;
+        using ConstIterator = TreeRaw::const_iterator;
 
         AbstractSyntaxTree(const ASTNodeFactoryPtr& astFactory, std::istream& program);
 
@@ -19,17 +21,22 @@ namespace td4 {
 
         TreeRaw& GetTree(void);
 
+        Iterator begin(void);
+        
+        Iterator end(void);
+
+        ConstIterator begin(void) const;
+        
+        ConstIterator end(void) const;
+
     private:
         std::vector<std::string> Tokenize(const std::string& line) const;
 
         static std::string TokenToLower(std::string token);
 
-        // Mnemonic GetMnemonic(const AbstractSyntaxTreeNode& node) const;
-
     private:
-        ASTNodeFactoryPtr _nodeFactory;
         TreeRaw _tree;
-        static std::unordered_map<std::string, ASTNodePtr> _registry;
+        ASTNodeFactoryPtr _nodeFactory;
     };
 
 }

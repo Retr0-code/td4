@@ -1,17 +1,24 @@
 #pragma once
+#include <functional>
 #include <unordered_map>
+#include "AbstractSyntaxTree.hpp"
 #include "AbstractSyntaxTreeNode.hpp"
 
 namespace td4 {
 
     class Compiler {
     public:
-        Compiler(std::string architecture);
+        using Bytes = std::vector<uint8_t>;
+        using OpcodeGenerator = std::function<Bytes (const ASTNodePtr&)>;
 
-        Compiler& Register(const Mnemonic& mnemonic, const IOpcodeGenerator& generator);
+        virtual ~Compiler() = default;
+    
+        virtual Compiler& Register(const ASTNodePtr& astNode, const OpcodeGenerator& generator);
+
+        virtual Bytes operator()(const AbstractSyntaxTree& ast) const;
 
     protected:
-        std::unordered_map<Mnemonic, const IOpcodeGenerator&> _mnemonicTable;
+        std::unordered_map<Mnemonic, OpcodeGenerator> _generator;
     };
 
 }

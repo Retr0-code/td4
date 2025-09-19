@@ -8,6 +8,8 @@ namespace td4 {
     public:
         IOperand(const Mnemonic& mnemonic);
 
+        virtual ~IOperand() = default;
+
         void SetValue(uint8_t value) noexcept;
         
         uint8_t GetValue(void) const noexcept;

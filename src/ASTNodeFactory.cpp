@@ -8,28 +8,28 @@
 namespace td4 {
 
     ASTNodeFactory::ASTNodeFactory(void) {
-        this->_generator.emplace("mov", [](){ return new OperatorMov(); });
-        this->_generator.emplace("add", [](){ return new OperatorAdd(); });
-        this->_generator.emplace("jmp", [](){ return new OperatorJmp(); });
-        this->_generator.emplace("jnc", [](){ return new OperatorJnc(); });
-        this->_generator.emplace("out", [](){ return new OperatorOut(); });
-        this->_generator.emplace("in", [](){ return new OperatorIn(); });
-        this->_generator.emplace("a", [](){ return new RegisterA(); });
-        this->_generator.emplace("b", [](){ return new RegisterB(); });
-        this->_generator.emplace("im", [](){ return new Immediate(); });
+        this->_registry.emplace("mov", [](){ return new OperatorMov(); });
+        this->_registry.emplace("add", [](){ return new OperatorAdd(); });
+        this->_registry.emplace("jmp", [](){ return new OperatorJmp(); });
+        this->_registry.emplace("jnc", [](){ return new OperatorJnc(); });
+        this->_registry.emplace("out", [](){ return new OperatorOut(); });
+        this->_registry.emplace("in", [](){ return new OperatorIn(); });
+        this->_registry.emplace("a", [](){ return new RegisterA(); });
+        this->_registry.emplace("b", [](){ return new RegisterB(); });
+        this->_registry.emplace("im", [](){ return new Immediate(); });
     }
 
     AbstractSyntaxTreeNode *ASTNodeFactory::operator()(const std::string &token) const {
         AbstractSyntaxTreeNode *astNode{nullptr};
 
         try {
-            astNode = this->_generator.at(token)();
+            astNode = this->_registry.at(token)();
         } catch (std::out_of_range &err) {
             std::optional<uint8_t> immediate{TryParseImmediate(token)};
             if (!immediate)
                 throw InvalidToken(token.c_str());
 
-            astNode = this->_generator.at("im")();
+            astNode = this->_registry.at("im")();
             reinterpret_cast<IOperand*>(astNode)->SetValue(*immediate);
         }
 
