@@ -2,18 +2,28 @@
 #include "Instructions.hpp"
 #include "AbstractSyntaxTreeNode.hpp"
 
-#define TD4_MOVAIM 0x30
-#define TD4_MOVBIM 0x70
-#define TD4_MOVAB  0x10
-#define TD4_MOVBA  0x40
-#define TD4_ADDAIM 0x00
-#define TD4_ADDBIM 0x50
-#define TD4_JMPIM  0xf0
-#define TD4_JNCIM  0xe0
-#define TD4_OUTIM  0xb0
-#define TD4_OUTB   0x90
-#define TD4_INA    0x20
-#define TD4_INB    0x60
+#define TD4_MOVAIM { 0xb8 }
+#define TD4_MOVBIM { 0xbb }
+#define TD4_MOVAB  { 0x89, 0xd8 }
+#define TD4_MOVBA  { 0x89, 0xc3 }
+#define TD4_ADDAIM { 0x0d, 0xf0, 0x00, 0x00, 0x00, 0x83, 0xc0 }
+#define TD4_ADDBIM { 0x81, 0xcb, 0xf0, 0x00, 0x00, 0x00, 0x83, 0xc0 }
+#define TD4_JMPIM  {  }
+#define TD4_JNCIM  {  }
+#define TD4_OUTIM  {  }
+#define TD4_OUTB   {  }
+#define TD4_INA    {  }
+#define TD4_INB    {  }
+
+using Bytes = td4::Compiler::Bytes;
+
+static Bytes& AddValue(Bytes& payload, int value) {
+    uint8_t *valuePtr{reinterpret_cast<uint8_t*>(&value)};
+    for (uint8_t i{0}; i < sizeof(value); ++i, ++valuePtr)
+        payload.emplace_back(*valuePtr);
+
+    return payload;
+}
 
 static uint8_t GetOperandValue(const td4::ASTNodePtr& node, size_t order = 0) {
     using namespace td4;
@@ -25,16 +35,12 @@ static uint8_t GetOperandValue(const td4::ASTNodePtr& node, size_t order = 0) {
     return (*operand)->GetValue();
 }
 
-static inline td4::Compiler::Bytes ConstructBinaryOperation(uint8_t opcode, const td4::ASTNodePtr& node) {
-    uint8_t instruction{opcode};
-    instruction |= 0x0f & GetOperandValue(node, 1);
-    return { instruction };
+static inline Bytes ConstructBinaryOperation(Bytes instruction, const td4::ASTNodePtr& node) {
+    return AddValue(instruction, GetOperandValue(node, 1));
 }
 
-static inline td4::Compiler::Bytes ConstructUnaryOperation(uint8_t opcode, const td4::ASTNodePtr& node) {
-    uint8_t instruction{opcode};
-    instruction |= 0x0f & GetOperandValue(node);
-    return { instruction };
+static inline Bytes ConstructUnaryOperation(Bytes instruction, const td4::ASTNodePtr& node) {
+    return AddValue(instruction, GetOperandValue(node));
 }
 
 extern "C" td4::Compiler GetCompiler(void) {
@@ -49,10 +55,10 @@ extern "C" td4::Compiler GetCompiler(void) {
         return ConstructBinaryOperation(TD4_MOVBIM, node);
     })
     .Register(MOVAB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_MOVAB };
+        return TD4_MOVAB;
     })
     .Register(MOVBA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_MOVBA };
+        return TD4_MOVBA;
     })
     .Register(ADDAIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
         return ConstructBinaryOperation(TD4_ADDAIM, node);
@@ -70,13 +76,13 @@ extern "C" td4::Compiler GetCompiler(void) {
         return ConstructUnaryOperation(TD4_OUTIM, node);
     })
     .Register(OUTB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_OUTB };
+        return TD4_OUTB;
     })
     .Register(INA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_INA };
+        return TD4_INA;
     })
     .Register(INB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_INB };
+        return TD4_INB;
     });
 
     return compiler;
