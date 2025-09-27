@@ -23,6 +23,7 @@ namespace td4 {
         this->_registry.emplace("neg", [](){ return new OperatorNeg(); });
         this->_registry.emplace("st",  [](){ return new OperatorSt(); });
         this->_registry.emplace("ld",  [](){ return new OperatorLd(); });
+        this->_registry.emplace("inc", [](){ return new OperatorInc(); });
         this->_registry.emplace("a",   [](){ return new RegisterA(); });
         this->_registry.emplace("b",   [](){ return new RegisterB(); });
         this->_registry.emplace("x",   [](){ return new RegisterX(); });
