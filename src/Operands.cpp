@@ -13,3 +13,5 @@ td4::RegisterB::RegisterB(void) : IOperand("b") {  }
 td4::RegisterX::RegisterX(void) : IOperand("x") {  }
 
 td4::RegisterY::RegisterY(void) : IOperand("y") {  }
+
+td4::RegisterXY::RegisterXY(void) : IOperand("xy") {  }

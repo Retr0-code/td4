@@ -68,6 +68,7 @@
         "regex": "cpp",
         "stack": "cpp",
         "print": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "filesystem": "cpp"
     }
 }

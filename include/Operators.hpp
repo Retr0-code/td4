@@ -122,4 +122,11 @@ namespace td4 {
         OperatorSt(const OperandPtr& operand);
     };
 
+    class OperatorInc : public IOperatorUnary {
+    public:
+        OperatorInc(void);
+        
+        OperatorInc(const OperandPtr& operand);
+    };
+
 }

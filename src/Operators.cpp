@@ -77,4 +77,9 @@ namespace td4 {
     OperatorSt::OperatorSt(const OperandPtr &operand)
         : IOperatorUnary("st", operand) {  }
 
+    OperatorInc::OperatorInc(void) : IOperatorUnary("inc") {  }
+
+    OperatorInc::OperatorInc(const OperandPtr &operand)
+        : IOperatorUnary("inc", operand) {  }
+
 }

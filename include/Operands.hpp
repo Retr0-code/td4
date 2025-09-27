@@ -30,4 +30,10 @@ namespace td4 {
         RegisterY(void);
     };
 
+    class RegisterXY : public IOperand {
+    public:
+        RegisterXY(void);
+    };
+
+
 }
