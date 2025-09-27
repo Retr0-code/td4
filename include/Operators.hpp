@@ -22,6 +22,42 @@ namespace td4 {
             const OperandPtr& operandLeft,
             const OperandPtr& operandRight);
     };
+
+    class OperatorSub : public IOperatorBinary {
+    public:
+        OperatorSub(void);
+
+        OperatorSub(
+            const OperandPtr& operandLeft,
+            const OperandPtr& operandRight);
+    };
+
+    class OperatorAnd : public IOperatorBinary {
+    public:
+        OperatorAnd(void);
+
+        OperatorAnd(
+            const OperandPtr& operandLeft,
+            const OperandPtr& operandRight);
+    };
+
+    class OperatorXor : public IOperatorBinary {
+    public:
+        OperatorXor(void);
+
+        OperatorXor(
+            const OperandPtr& operandLeft,
+            const OperandPtr& operandRight);
+    };
+
+    class OperatorOr : public IOperatorBinary {
+    public:
+        OperatorOr(void);
+
+        OperatorOr(
+            const OperandPtr& operandLeft,
+            const OperandPtr& operandRight);
+    };
     
     class OperatorJmp : public IOperatorUnary {
     public:
@@ -36,6 +72,13 @@ namespace td4 {
 
         OperatorJnc(const OperandPtr& operand);
     };
+
+    class OperatorJz : public IOperatorUnary {
+    public:
+        OperatorJz(void);
+        
+        OperatorJz(const OperandPtr& operand);
+    };
     
     class OperatorOut : public IOperatorUnary {
     public:
@@ -49,6 +92,34 @@ namespace td4 {
         OperatorIn(void);
         
         OperatorIn(const OperandPtr& operand);
+    };
+
+    class OperatorNeg : public IOperatorUnary {
+    public:
+        OperatorNeg(void);
+
+        OperatorNeg(const OperandPtr& operand);
+    };
+    
+    class OperatorNot : public IOperatorUnary {
+    public:
+        OperatorNot(void);
+        
+        OperatorNot(const OperandPtr& operand);
+    };
+
+    class OperatorLd : public IOperatorUnary {
+    public:
+        OperatorLd(void);
+        
+        OperatorLd(const OperandPtr& operand);
+    };
+
+    class OperatorSt : public IOperatorUnary {
+    public:
+        OperatorSt(void);
+        
+        OperatorSt(const OperandPtr& operand);
     };
 
 }

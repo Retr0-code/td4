@@ -10,13 +10,24 @@ namespace td4 {
     ASTNodeFactory::ASTNodeFactory(void) {
         this->_registry.emplace("mov", [](){ return new OperatorMov(); });
         this->_registry.emplace("add", [](){ return new OperatorAdd(); });
+        this->_registry.emplace("sub", [](){ return new OperatorSub(); });
+        this->_registry.emplace("and", [](){ return new OperatorAnd(); });
+        this->_registry.emplace("xor", [](){ return new OperatorXor(); });
+        this->_registry.emplace("or",  [](){ return new OperatorOr(); });
         this->_registry.emplace("jmp", [](){ return new OperatorJmp(); });
         this->_registry.emplace("jnc", [](){ return new OperatorJnc(); });
+        this->_registry.emplace("jz",  [](){ return new OperatorJz(); });
         this->_registry.emplace("out", [](){ return new OperatorOut(); });
-        this->_registry.emplace("in", [](){ return new OperatorIn(); });
-        this->_registry.emplace("a", [](){ return new RegisterA(); });
-        this->_registry.emplace("b", [](){ return new RegisterB(); });
-        this->_registry.emplace("im", [](){ return new Immediate(); });
+        this->_registry.emplace("in",  [](){ return new OperatorIn(); });
+        this->_registry.emplace("not", [](){ return new OperatorNot(); });
+        this->_registry.emplace("neg", [](){ return new OperatorNeg(); });
+        this->_registry.emplace("st",  [](){ return new OperatorSt(); });
+        this->_registry.emplace("ld",  [](){ return new OperatorLd(); });
+        this->_registry.emplace("a",   [](){ return new RegisterA(); });
+        this->_registry.emplace("b",   [](){ return new RegisterB(); });
+        this->_registry.emplace("x",   [](){ return new RegisterX(); });
+        this->_registry.emplace("y",   [](){ return new RegisterY(); });
+        this->_registry.emplace("im",  [](){ return new Immediate(); });
     }
 
     AbstractSyntaxTreeNode *ASTNodeFactory::operator()(const std::string &token) const {

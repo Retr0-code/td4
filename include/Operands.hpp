@@ -20,4 +20,14 @@ namespace td4 {
         RegisterB(void);
     };
 
+    class RegisterX : public IOperand {
+    public:
+        RegisterX(void);
+    };
+
+    class RegisterY : public IOperand {
+    public:
+        RegisterY(void);
+    };
+
 }
