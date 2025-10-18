@@ -31,17 +31,45 @@ namespace td4 {
         std::vector<std::string> tokens{this->Tokenize(line)};
         OperatorPtr operatorNode{nullptr};
 
-        auto currentToken = tokens.begin();
         try {
+            auto currentToken{tokens.begin()};
+            
             operatorNode = std::shared_ptr<IOperator>(
-                reinterpret_cast<IOperator*>((*this->_nodeFactory)(*currentToken)));
-
-            std::transform(++currentToken, tokens.end(), operatorNode->begin(),
-                [this](const std::string& token) {
-                    return std::shared_ptr<IOperand>(
-                        reinterpret_cast<IOperand*>((*this->_nodeFactory)(token)));
-                }
+                reinterpret_cast<IOperator*>((*this->_nodeFactory)(*currentToken))
             );
+            
+            auto operandIter{operatorNode->begin()};
+            bool firstToken{true};
+
+            for (; currentToken != tokens.end(); ++operandIter) {
+                if (operandIter == operatorNode->end())
+                    throw exception::InvalidToken(currentToken->c_str());
+
+                if (currentToken + 1 == tokens.end())
+                    throw exception::ExpectedToken(currentToken->c_str());
+
+                if (*currentToken == "," || firstToken) {
+                    *operandIter = std::shared_ptr<IOperand>(
+                        reinterpret_cast<IOperand*>((*this->_nodeFactory)(*(++currentToken)))
+                    );
+
+                    ++currentToken;
+                    firstToken = false;
+                }
+                
+                if (*currentToken == "+") {
+                    std::optional<uint8_t> value{_nodeFactory->TryParseImmediate(*(++currentToken))};
+                    if (!value || *operandIter == nullptr)
+                        throw exception::InvalidToken(currentToken->c_str());
+
+                    (*operandIter)->SetValue(*value);
+                    ++currentToken;
+                }
+            }
+
+            if (operandIter != operatorNode->end())
+                throw exception::ExpectedToken((currentToken - 1)->c_str());
+
         } catch (exception::InvalidToken &err) {
             std::cerr << err.what() << '\n';
             throw exception::InvalidSyntax(line.c_str());
@@ -66,20 +94,14 @@ namespace td4 {
         return this->_tree.end();
     }
 
-    // TODO: Lexical analysis tokenization
     std::vector<std::string> AbstractSyntaxTree::Tokenize(const std::string &line) const {
         std::vector<std::string> tokens;
-        std::regex pattern(R"(\s*(\w+)\s*([\w0-9]+[hbo]*)(?:\s*,\s*([\w0-9]+[hbo]*))?(?:\s*\+\s*([\w0-9]+[hbo]*))?)");
-        std::smatch regexTokens;
+        std::regex tokenizer(R"((\w+|[\+\-,]))");
+        std::sregex_token_iterator token{line.begin(), line.end(), tokenizer};
+        std::sregex_token_iterator tokensEnd;
 
-        std::regex_match(line, regexTokens, pattern);
-
-        if (regexTokens.empty())
-            throw exception::InvalidSyntax{line.c_str()};
-
-        for (auto token = regexTokens.begin() + 1; token != regexTokens.end(); ++token)
-            if (token->length() > 0)
-                tokens.emplace_back(std::move(AbstractSyntaxTree::TokenToLower(*token)));
+        for (; token != tokensEnd; ++token)
+            tokens.emplace_back(std::move(AbstractSyntaxTree::TokenToLower(*token)));
 
         return tokens;
     }

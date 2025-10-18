@@ -62,10 +62,10 @@ extern "C" td4::Compiler GetCompiler(void) {
         return ConstructBinaryOperation(TD4_MOVBIM, node);
     })
     .Register(MOVAB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_MOVAB };
+        return ConstructBinaryOperation(TD4_MOVAB, node);
     })
     .Register(MOVBA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_MOVBA };
+        return ConstructBinaryOperation(TD4_MOVBA, node);
     })
     .Register(ADDAIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
         return ConstructBinaryOperation(TD4_ADDAIM, node);
@@ -83,13 +83,13 @@ extern "C" td4::Compiler GetCompiler(void) {
         return ConstructUnaryOperation(TD4_OUTIM, node);
     })
     .Register(OUTB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_OUTB };
+        return ConstructUnaryOperation(TD4_OUTB, node);
     })
     .Register(INA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_INA };
+        return ConstructUnaryOperation(TD4_INA, node);
     })
     .Register(INB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return { TD4_INB };
+        return ConstructUnaryOperation(TD4_INB, node);
     });
 
     return compiler;

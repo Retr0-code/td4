@@ -28,6 +28,11 @@ namespace td4 {
             InvalidToken(const char* message);
         };
 
+        class ExpectedToken : public Exception {
+        public:
+            ExpectedToken(const char* message);
+        };
+
         class UnknownInstruction : public Exception {
         public:
             UnknownInstruction(const char* message);

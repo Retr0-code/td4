@@ -32,3 +32,7 @@ ModuleLoad::ModuleLoad(const char* message) {
 ModuleCall::ModuleCall(const char* function, const char *module) {
     std::sprintf(this->_message, "Unable to call function \"%s\" from module %s\n", function, module);
 }
+
+ExpectedToken::ExpectedToken(const char *message) {
+    std::sprintf(this->_message, "Expected a token after <%s>\n", message);
+}

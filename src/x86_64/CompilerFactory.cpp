@@ -2,18 +2,18 @@
 #include "Instructions.hpp"
 #include "AbstractSyntaxTreeNode.hpp"
 
-#define TD4_MOVAIM { 0xb8 }
-#define TD4_MOVBIM { 0xbb }
-#define TD4_MOVAB  { 0x89, 0xd8 }
-#define TD4_MOVBA  { 0x89, 0xc3 }
-#define TD4_ADDAIM { 0x0d, 0xf0, 0x00, 0x00, 0x00, 0x83, 0xc0 }
-#define TD4_ADDBIM { 0x81, 0xcb, 0xf0, 0x00, 0x00, 0x00, 0x83, 0xc0 }
-#define TD4_JMPIM  {  }
-#define TD4_JNCIM  {  }
-#define TD4_OUTIM  {  }
-#define TD4_OUTB   {  }
-#define TD4_INA    {  }
-#define TD4_INB    {  }
+#define X86_MOVAIM { 0xb8 }
+#define X86_MOVBIM { 0xbb }
+#define X86_MOVAB  { 0x89, 0xd8 }
+#define X86_MOVBA  { 0x89, 0xc3 }
+#define X86_ADDAIM { 0x0d, 0xf0, 0x00, 0x00, 0x00, 0x83, 0xc0 }
+#define X86_ADDBIM { 0x81, 0xcb, 0xf0, 0x00, 0x00, 0x00, 0x83, 0xc3 }
+#define X86_JMPIM  {  }
+#define X86_JNCIM  {  }
+#define X86_OUTIM  {  }
+#define X86_OUTB   {  }
+#define X86_INA    {  }
+#define X86_INB    {  }
 
 using Bytes = td4::Compiler::Bytes;
 
@@ -49,40 +49,40 @@ extern "C" td4::Compiler GetCompiler(void) {
     Compiler compiler;
 
     compiler.Register(MOVAIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return ConstructBinaryOperation(TD4_MOVAIM, node);
+        return ConstructBinaryOperation(X86_MOVAIM, node);
     })
     .Register(MOVBIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return ConstructBinaryOperation(TD4_MOVBIM, node);
+        return ConstructBinaryOperation(X86_MOVBIM, node);
     })
     .Register(MOVAB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return TD4_MOVAB;
+        return X86_MOVAB;
     })
     .Register(MOVBA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return TD4_MOVBA;
+        return X86_MOVBA;
     })
     .Register(ADDAIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return ConstructBinaryOperation(TD4_ADDAIM, node);
+        return ConstructBinaryOperation(X86_ADDAIM, node);
     })
     .Register(ADDBIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return ConstructBinaryOperation(TD4_ADDBIM, node);
+        return ConstructBinaryOperation(X86_ADDBIM, node);
     })
     .Register(JMPIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return ConstructUnaryOperation(TD4_JMPIM, node);
+        return ConstructUnaryOperation(X86_JMPIM, node);
     })
     .Register(JNCIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return ConstructUnaryOperation(TD4_JNCIM, node);
+        return ConstructUnaryOperation(X86_JNCIM, node);
     })
     .Register(OUTIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return ConstructUnaryOperation(TD4_OUTIM, node);
+        return ConstructUnaryOperation(X86_OUTIM, node);
     })
     .Register(OUTB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return TD4_OUTB;
+        return X86_OUTB;
     })
     .Register(INA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return TD4_INA;
+        return X86_INA;
     })
     .Register(INB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
-        return TD4_INB;
+        return X86_INB;
     });
 
     return compiler;

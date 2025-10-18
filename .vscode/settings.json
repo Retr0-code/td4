@@ -69,6 +69,7 @@
         "stack": "cpp",
         "print": "cpp",
         "iostream": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "codecvt": "cpp"
     }
 }

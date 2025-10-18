@@ -16,8 +16,6 @@ namespace td4 {
 
         virtual AbstractSyntaxTreeNode* operator()(const std::string &token) const;
 
-    private:
-
         typedef enum NumericalSystemMarker : char {
             NumericalSystemBin = 'b',
             NumericalSystemOct = 'o',
