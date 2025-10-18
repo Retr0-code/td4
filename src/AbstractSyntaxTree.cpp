@@ -66,9 +66,10 @@ namespace td4 {
         return this->_tree.end();
     }
 
+    // TODO: Lexical analysis tokenization
     std::vector<std::string> AbstractSyntaxTree::Tokenize(const std::string &line) const {
         std::vector<std::string> tokens;
-        std::regex pattern(R"(\s*([a-zA-Z]+)\s*([a-fA-F0-9]+[hbo]*)(?:\s*,\s*([a-fA-F0-9]+[hbo]*))?)");
+        std::regex pattern(R"(\s*(\w+)\s*([\w0-9]+[hbo]*)(?:\s*,\s*([\w0-9]+[hbo]*))?(?:\s*\+\s*([\w0-9]+[hbo]*))?)");
         std::smatch regexTokens;
 
         std::regex_match(line, regexTokens, pattern);

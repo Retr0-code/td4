@@ -2,18 +2,31 @@
 #include "Instructions.hpp"
 #include "AbstractSyntaxTreeNode.hpp"
 
-#define TD4_MOVAIM 0x30
-#define TD4_MOVBIM 0x70
-#define TD4_MOVAB  0x10
-#define TD4_MOVBA  0x40
-#define TD4_ADDAIM 0x00
-#define TD4_ADDBIM 0x50
-#define TD4_JMPIM  0xf0
-#define TD4_JNCIM  0xe0
-#define TD4_OUTIM  0xb0
-#define TD4_OUTB   0x90
-#define TD4_INA    0x20
-#define TD4_INB    0x60
+#define TD4_MOVAIM  0x30
+#define TD4_MOVBIM  0x70
+#define TD4M_MOVYIM 0xc0
+#define TD4M_MOVXIM 0xd0
+#define TD4_MOVAB   0x10
+#define TD4_MOVBA   0x40
+#define TD4_ADDAIM  0x00
+#define TD4_ADDBIM  0x50
+#define TD4_JMPIM   0xf0
+#define TD4_JNCIM   0xe0
+#define TD4M_JZIM   0xa0
+#define TD4_OUTIM   0xb0
+#define TD4_OUTB    0x90
+#define TD4_INA     0x20
+#define TD4_INB     0x60
+
+#define TD4M_ADDAB  0x80
+#define TD4M_NEGA   0x81
+#define TD4M_NOTA   0x82
+#define TD4M_ORAB   0x83
+#define TD4M_ANDAB  0x84
+#define TD4M_XORAB  0x85
+#define TD4M_SUBAB  0x86
+#define TD4M_OUTA   0x87
+#define TD4M_LDA    0x88
 
 static uint8_t GetOperandValue(const td4::ASTNodePtr& node, size_t order = 0) {
     using namespace td4;
