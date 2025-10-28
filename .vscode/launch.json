@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/debug/td4c",
-            "args": ["-i", "test", "-o", "out.td4", "-m", "td4"],
+            "args": ["-i", "test_m", "-o", "out.td4m", "-m", "td4"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build/debug",
             "environment": [],

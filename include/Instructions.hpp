@@ -4,8 +4,12 @@
 
 #define MOVAIM std::make_shared<td4::OperatorMov>(std::make_shared<td4::RegisterA>(), std::make_shared<td4::Immediate>())
 #define MOVBIM std::make_shared<td4::OperatorMov>(std::make_shared<td4::RegisterB>(), std::make_shared<td4::Immediate>())
+#define MOVXIM std::make_shared<td4::OperatorMov>(std::make_shared<td4::RegisterX>(), std::make_shared<td4::Immediate>())
+#define MOVYIM std::make_shared<td4::OperatorMov>(std::make_shared<td4::RegisterY>(), std::make_shared<td4::Immediate>())
 #define MOVAB  std::make_shared<td4::OperatorMov>(std::make_shared<td4::RegisterA>(), std::make_shared<td4::RegisterB>())
 #define MOVBA  std::make_shared<td4::OperatorMov>(std::make_shared<td4::RegisterB>(), std::make_shared<td4::RegisterA>())
+#define MOVXA  std::make_shared<td4::OperatorMov>(std::make_shared<td4::RegisterX>(), std::make_shared<td4::RegisterA>())
+#define MOVYA  std::make_shared<td4::OperatorMov>(std::make_shared<td4::RegisterY>(), std::make_shared<td4::RegisterA>())
 
 #define ADDAIM std::make_shared<td4::OperatorAdd>(std::make_shared<td4::RegisterA>(), std::make_shared<td4::Immediate>())
 #define ADDBIM std::make_shared<td4::OperatorAdd>(std::make_shared<td4::RegisterB>(), std::make_shared<td4::Immediate>())
@@ -25,6 +29,7 @@
 
 #define OUTIM  std::make_shared<td4::OperatorOut>(std::make_shared<td4::Immediate>())
 #define OUTB   std::make_shared<td4::OperatorOut>(std::make_shared<td4::RegisterB>())
+#define OUTA   std::make_shared<td4::OperatorOut>(std::make_shared<td4::RegisterA>())
 #define INA    std::make_shared<td4::OperatorIn>(std::make_shared<td4::RegisterA>())
 #define INB    std::make_shared<td4::OperatorIn>(std::make_shared<td4::RegisterB>())
 #define LDA    std::make_shared<td4::OperatorLd>(std::make_shared<td4::RegisterA>())

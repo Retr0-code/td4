@@ -4,20 +4,20 @@
 
 #define TD4_MOVAIM  0x30
 #define TD4_MOVBIM  0x70
-#define TD4M_MOVYIM 0xc0
-#define TD4M_MOVXIM 0xd0
 #define TD4_MOVAB   0x10
 #define TD4_MOVBA   0x40
 #define TD4_ADDAIM  0x00
 #define TD4_ADDBIM  0x50
 #define TD4_JMPIM   0xf0
 #define TD4_JNCIM   0xe0
-#define TD4M_JZIM   0xa0
 #define TD4_OUTIM   0xb0
 #define TD4_OUTB    0x90
 #define TD4_INA     0x20
 #define TD4_INB     0x60
 
+#define TD4M_MOVYIM 0xc0
+#define TD4M_MOVXIM 0xd0
+#define TD4M_JZIM   0xa0
 #define TD4M_ADDAB  0x80
 #define TD4M_NEGA   0x81
 #define TD4M_NOTA   0x82
@@ -27,6 +27,13 @@
 #define TD4M_SUBAB  0x86
 #define TD4M_OUTA   0x87
 #define TD4M_LDA    0x88
+#define TD4M_STA    0x89
+#define TD4M_LDB    0x8a
+#define TD4M_STB    0x8b
+#define TD4M_MOVXA  0x8c
+#define TD4M_MOVYA  0x8d
+#define TD4M_INCXY  0x8e
+#define TD4M_JMPXY  0x8f
 
 static uint8_t GetOperandValue(const td4::ASTNodePtr& node, size_t order = 0) {
     using namespace td4;
@@ -90,6 +97,63 @@ extern "C" td4::Compiler GetCompiler(void) {
     })
     .Register(INB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
         return ConstructUnaryOperation(TD4_INB, node);
+    })
+    .Register(MOVXIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return ConstructBinaryOperation(TD4M_MOVXIM, node);
+    })
+    .Register(MOVYIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return ConstructBinaryOperation(TD4M_MOVYIM, node);
+    })
+    .Register(JZIM, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return ConstructUnaryOperation(TD4M_JZIM, node);
+    })
+    .Register(ADDAB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_ADDAB};
+    })
+    .Register(NEGA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_NEGA};
+    })
+    .Register(NOTA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_NOTA};
+    })
+    .Register(ORAB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_ORAB};
+    })
+    .Register(ANDAB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_ANDAB};
+    })
+    .Register(XORAB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_XORAB};
+    })
+    .Register(SUBAB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_SUBAB};
+    })
+    .Register(OUTA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_OUTA};
+    })
+    .Register(LDA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_LDA};
+    })
+    .Register(STA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_STA};
+    })
+    .Register(LDB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_LDB};
+    })
+    .Register(STB, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_STB};
+    })
+    .Register(MOVXA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_MOVXA};
+    })
+    .Register(MOVYA, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_MOVYA};
+    })
+    .Register(INCXY, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_INCXY};
+    })
+    .Register(JMPXY, [](const td4::ASTNodePtr& node) -> Compiler::Bytes {
+        return {TD4M_JMPXY};
     });
 
     return compiler;
